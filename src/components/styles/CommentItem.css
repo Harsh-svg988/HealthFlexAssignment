@@ -4,34 +4,61 @@
     margin-bottom: 10px;
     position: relative;
     border-radius: 8px;
-    background-color: #fff;
-  }
-  
-  .comment-content {
+    background-color: #f3f0f0;
+}
+
+.comment-content {
     margin-bottom: 10px;
-  }
-  
-  .comment-actions {
+}
+
+.comment-actions {
     display: flex;
     justify-content: flex-end;
-  }
-  
-  .comment-actions button {
+}
+
+.comment-actions button {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
     margin-left: 10px;
-  }
-  
-  .delete-button {
-    position: absolute;
+    transition: background-color 0.3s;
+}
+
+.comment-actions button:hover {
+    background-color: #e0e0e0;
+}
+
+.delete-button {
+    /* position: absolute; */
     right: 10px;
-    top: 10px;
+    top: 30px;
     border: none;
     background-color: transparent;
     color: red;
     cursor: pointer;
-  }
-  
-  .replies-list {
-    margin-left: 20px;
+}
+
+.replies-list {
+    margin-left: 30px;
     margin-top: 10px;
-  }
-  
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid #adacac;
+    border-radius: 4px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.reply {
+    border-left: 3px solid #6f6f6f;
+    padding-left: 10px;
+    margin-left: 0;
+}
+.date{
+    width:90px;
+    margin-right: 1px;
+}

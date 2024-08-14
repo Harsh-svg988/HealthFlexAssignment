@@ -4,10 +4,8 @@ import CommentForm from './components/CommentForm';
 import './App.css';
 import { useLocalStorage } from 'react-use';
 
-
 const App = () => {
   const [comments, setComments] = useLocalStorage('comments', []);
-
 
   // Load comments from localStorage on component mount
   useEffect(() => {
@@ -41,10 +39,39 @@ const App = () => {
     setComments(updatedComments);
   };
 
+  const deleteComment = (id) => {
+    const deleteRecursively = (commentsList) => {
+      return commentsList
+        .filter(comment => comment.id !== id)
+        .map(comment => ({
+          ...comment,
+          replies: deleteRecursively(comment.replies),
+        }));
+    };
+
+    setComments(deleteRecursively(comments));
+  };
+
+  const updateComment = (id, newText) => {
+    const updateRecursively = (commentsList) => {
+      return commentsList.map(comment => {
+        if (comment.id === id) {
+          return { ...comment, text: newText };
+        }
+        return {
+          ...comment,
+          replies: updateRecursively(comment.replies),
+        };
+      });
+    };
+
+    setComments(updateRecursively(comments));
+  };
+
   return (
     <div className="app">
-      <CommentForm addComment={addComment} />
-      <CommentList comments={comments} addReply={addReply} />
+      <CommentForm addComment={addComment} isReply={false} />
+      <CommentList comments={comments} addReply={addReply} deleteComment={deleteComment} updateComment={updateComment} />
     </div>
   );
 };

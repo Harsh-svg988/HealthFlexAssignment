@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './styles/CommentForm.css';
 
-const CommentForm = ({ addComment }) => {
+const CommentForm = ({ addComment, isReply }) => {
   const [name, setName] = useState('');
   const [text, setText] = useState('');
 
@@ -26,6 +26,7 @@ const CommentForm = ({ addComment }) => {
 
   return (
     <form onSubmit={handleSubmit} className="comment-form">
+      <h3>{isReply ? 'Reply' : 'Comment'}</h3>
       <input
         type="text"
         value={name}
@@ -36,10 +37,10 @@ const CommentForm = ({ addComment }) => {
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="Your comment"
+        placeholder={isReply ? "Your reply" : "Your comment"}
         required
       />
-      <button type="submit">Add Comment</button>
+      <button type="submit">{isReply ? 'Post Reply' : 'Post Comment'}</button>
     </form>
   );
 };
