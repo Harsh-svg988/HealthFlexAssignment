@@ -15,8 +15,10 @@ const CommentItem = ({ comment, addReply, deleteComment, updateComment, isReply 
   };
 
   const handleSave = () => {
-    updateComment(comment.id, text);
-    setIsEditing(false);
+    if (text.trim()) {
+      updateComment(comment.id, text);
+      setIsEditing(false);
+    }
   };
 
   const handleDelete = () => {
@@ -33,19 +35,16 @@ const CommentItem = ({ comment, addReply, deleteComment, updateComment, isReply 
   };
 
   const formatDate = (dateString) => {
-    const date = moment(dateString, 'YYYY-MM-DD HH:mm:ss');
-    if (date.isValid()) {
-      return date.format('DD/MM/YYYY HH:mm');
-    } else {
-      return 'Invalid date';
-    }
+    return moment(dateString).format('DD MMM YYYY');
   };
 
   return (
     <div className={`comment-item ${isReply ? 'reply' : ''}`}>
-      <div className="date">{formatDate(comment.date)}</div>
+      <div className="comment-header">
+        <span className="comment-name">{comment.name}</span>
+        <span className="comment-date">{formatDate(comment.date)}</span>
+      </div>
       <div className="comment-content">
-        <strong>{comment.name}</strong>
         {isEditing ? (
           <textarea
             value={text}
@@ -56,32 +55,27 @@ const CommentItem = ({ comment, addReply, deleteComment, updateComment, isReply 
         )}
       </div>
       <div className="comment-actions">
-        {isEditing ? (
-          <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={() => setIsEditing(false)}>Cancel</button>
-          </>
-        ) : (
-          <>
-            <button onClick={handleEdit}>Edit</button>
-            {!isReply && <button onClick={handleReply}>Reply</button>}
-          </>
-        )}
-        <button onClick={handleDelete} className="delete-button">
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </button>
+        {!isReply && <button onClick={handleReply}>Reply</button>}
+        <button onClick={handleEdit}>Edit</button>
       </div>
-      {showReplyForm && <CommentForm addComment={addNewReply} isReply={true} />}
+      <button onClick={handleDelete} className="delete-button">
+        <FontAwesomeIcon icon={faTrashAlt} />
+      </button>
+      {showReplyForm && (
+        <div className="reply-form">
+          <CommentForm addComment={addNewReply} isReply={true} />
+        </div>
+      )}
       {comment.replies && comment.replies.length > 0 && (
         <div className="replies-list">
           {comment.replies.map((reply) => (
-            <CommentItem 
-              key={reply.id} 
-              comment={reply} 
-              addReply={addReply} 
+            <CommentItem
+              key={reply.id}
+              comment={reply}
+              addReply={addReply}
               deleteComment={deleteComment}
               updateComment={updateComment}
-              isReply={true} 
+              isReply={true}
             />
           ))}
         </div>

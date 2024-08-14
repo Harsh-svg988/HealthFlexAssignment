@@ -4,29 +4,26 @@ import './styles/CommentForm.css';
 const CommentForm = ({ addComment, isReply }) => {
   const [name, setName] = useState('');
   const [text, setText] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     if (!name.trim() || !text.trim()) {
-      return; // Don't submit empty fields
+      setError('Both name and comment are required.');
+      return;
     }
 
-    const newComment = {
-      name,
-      text,
-      date: new Date().toLocaleString(),
-    };
-
-    addComment(newComment);
-
+    addComment({ name, text });
     setName('');
     setText('');
+    setError('');
   };
 
   return (
     <form onSubmit={handleSubmit} className="comment-form">
       <h3>{isReply ? 'Reply' : 'Comment'}</h3>
+      {error && <p className="error">{error}</p>}
       <input
         type="text"
         value={name}

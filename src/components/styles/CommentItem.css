@@ -1,64 +1,92 @@
 .comment-item {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
     position: relative;
-    border-radius: 8px;
-    background-color: #f3f0f0;
-}
-
-.comment-content {
-    margin-bottom: 10px;
-}
-
-.comment-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.comment-actions button {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 5px 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .comment-name {
+    font-weight: bold;
+  }
+  
+  .comment-date {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .comment-content {
+    margin-bottom: 10px;
+  }
+  
+  .comment-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .comment-actions button {
+    background: none;
+    border: none;
+    color: #4a90e2;
     cursor: pointer;
-    margin-left: 10px;
-    transition: background-color 0.3s;
-}
-
-.comment-actions button:hover {
-    background-color: #e0e0e0;
-}
-
-.delete-button {
-    /* position: absolute; */
-    right: 10px;
-    top: 30px;
+    padding: 0;
+    font-size: 0.9em;
+  }
+  
+  
+  .delete-button {
+    position: absolute;
+    right: -14px;
+    top: 43px;
     border: none;
     background-color: transparent;
-    color: red;
+    color: #ff4d4d;
     cursor: pointer;
-}
-
-.replies-list {
-    margin-left: 30px;
-    margin-top: 10px;
-}
-
-textarea {
-    width: 100%;
-    border: 1px solid #adacac;
-    border-radius: 4px;
     padding: 5px;
-    box-sizing: border-box;
-}
-
-.reply {
-    border-left: 3px solid #6f6f6f;
-    padding-left: 10px;
-    margin-left: 0;
-}
-.date{
-    width:90px;
-    margin-right: 1px;
-}
+    font-size: 1em;
+    transition: color 0.3s;
+    background-color: black;
+    border-radius: 50%;
+  }
+  
+  .delete-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  .replies-list {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .reply-form {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  .reply-form input,
+  .reply-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .reply-form button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

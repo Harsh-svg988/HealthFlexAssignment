@@ -2,76 +2,79 @@ import React, { useState, useEffect } from 'react';
 import CommentList from './components/CommentList';
 import CommentForm from './components/CommentForm';
 import './App.css';
-import { useLocalStorage } from 'react-use';
 
 const App = () => {
-  const [comments, setComments] = useLocalStorage('comments', []);
-
-  // Load comments from localStorage on component mount
-  useEffect(() => {
+  const [comments, setComments] = useState(() => {
     const storedComments = localStorage.getItem('comments');
-    if (storedComments) {
-      console.log('Loading comments:', JSON.parse(storedComments));
-      setComments(JSON.parse(storedComments));
-    }
-  }, []);
+    return storedComments ? JSON.parse(storedComments) : [];
+  });
 
-  // Save comments to localStorage whenever they change
   useEffect(() => {
-    console.log('Saving comments:', comments);
     localStorage.setItem('comments', JSON.stringify(comments));
   }, [comments]);
 
   const addComment = (comment) => {
-    setComments([...comments, { ...comment, id: Date.now(), replies: [] }]);
+    const newComment = {
+      ...comment,
+      id: Date.now(),
+      date: new Date().toISOString(),
+      replies: []
+    };
+    setComments(prevComments => [...prevComments, newComment]);
   };
 
   const addReply = (commentId, reply) => {
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === commentId) {
-        return {
-          ...comment,
-          replies: [...comment.replies, { ...reply, id: Date.now(), replies: [] }],
-        };
-      }
-      return comment;
-    });
-    setComments(updatedComments);
+    const newReply = {
+      ...reply,
+      id: Date.now(),
+      date: new Date().toISOString()
+    };
+    setComments(prevComments => 
+      prevComments.map(comment => 
+        comment.id === commentId
+          ? { ...comment, replies: [...comment.replies, newReply] }
+          : comment
+      )
+    );
   };
 
   const deleteComment = (id) => {
-    const deleteRecursively = (commentsList) => {
-      return commentsList
-        .filter(comment => comment.id !== id)
+    setComments(prevComments => 
+      prevComments.filter(comment => comment.id !== id)
         .map(comment => ({
           ...comment,
-          replies: deleteRecursively(comment.replies),
-        }));
-    };
-
-    setComments(deleteRecursively(comments));
+          replies: comment.replies.filter(reply => reply.id !== id)
+        }))
+    );
   };
 
   const updateComment = (id, newText) => {
-    const updateRecursively = (commentsList) => {
-      return commentsList.map(comment => {
-        if (comment.id === id) {
-          return { ...comment, text: newText };
-        }
-        return {
-          ...comment,
-          replies: updateRecursively(comment.replies),
-        };
-      });
-    };
-
-    setComments(updateRecursively(comments));
+    setComments(prevComments => 
+      prevComments.map(comment => 
+        comment.id === id
+          ? { ...comment, text: newText }
+          : {
+              ...comment,
+              replies: comment.replies.map(reply =>
+                reply.id === id ? { ...reply, text: newText } : reply
+              )
+            }
+      )
+    );
   };
+
+  const sortedComments = [...comments].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
     <div className="app">
+      <h1>Comments Section</h1>
       <CommentForm addComment={addComment} isReply={false} />
-      <CommentList comments={comments} addReply={addReply} deleteComment={deleteComment} updateComment={updateComment} />
+      <CommentList
+        comments={sortedComments}
+        addReply={addReply}
+        deleteComment={deleteComment}
+        updateComment={updateComment}
+      />
     </div>
   );
 };
