@@ -1,0 +1,24 @@
+.comment-form {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment-form input,
+  .comment-form textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  .comment-form button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  

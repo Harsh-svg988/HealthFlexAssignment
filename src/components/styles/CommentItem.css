@@ -1,0 +1,37 @@
+.comment-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .comment-content {
+    margin-bottom: 10px;
+  }
+  
+  .comment-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .comment-actions button {
+    margin-left: 10px;
+  }
+  
+  .delete-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+  }
+  
+  .replies-list {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
